@@ -8,8 +8,8 @@ navpos: 1
 Biips
 =============================================================================
 
-- Version:       0.10.1
-- Last modified: 2015-07-07
+- Version:       0.10.0
+- Last modified: 2014-11-25
 - Contact:       Biips project team <biips-project@lists.gforge.inria.fr>
 - Maintainer:    [Adrien Todeschini](http://adrien.tspace.fr/) <adrien.todeschini@inria.fr>
 - License:       GPL-3
