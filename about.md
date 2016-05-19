@@ -13,7 +13,7 @@ Biips
 - Contact:       Biips project team <biips-project@lists.gforge.inria.fr>
 - Maintainer:    [Adrien Todeschini](https://sites.google.com/site/adrientodeschini/) <adrien.todeschini@inria.fr>
 - License:       GPL-3
-- Website:       <http://alea.bordeaux.inria.fr/biips>
+- Website:       <https://biips.github.io/>
 
  Biips is a general software for Bayesian inference with interacting particle systems, a.k.a. sequential Monte Carlo (SMC) methods.
  It aims at popularizing the use of these methods to non-statistician researchers and students, thanks to its automated "black box" inference engine.

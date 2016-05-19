@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Doc
-permalink: /doc/
+title: Docs
+permalink: /docs/
 navpos: 5
 ---
 
