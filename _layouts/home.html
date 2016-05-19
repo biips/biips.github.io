@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+  <body>
+
+    {% include header.html %}
+
+    <div class="page-content">
+      <div class="wrapper">
+        {{ content }}
+
+        <h1>News</h1>
+
+        <ul class="post-list">
+          {% for post in site.posts %}
+            <li>
+              <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+
+              <h2>
+                <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
+              </h2>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+
+    {% include footer.html %}
+
+  </body>
+
+</html>

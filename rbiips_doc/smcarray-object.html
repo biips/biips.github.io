@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>smcarray-object. Rbiips 0.10.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">Rbiips 0.10.0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Objects for representing SMC output.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>is.smcarray(object)</div>
+<div>is.smcarray.fsb(object)</div>
+<div>is.smcarray.fsb.list(object)</div>
+<div>biips_diagnosis(object, ...)</div>
+<div>"biips_diagnosis"(object, ess_thres&nbsp;=&nbsp;30, quiet&nbsp;=&nbsp;FALSE, ...)</div>
+<div>"biips_diagnosis"(object, type&nbsp;=&nbsp;"fsb", quiet&nbsp;=&nbsp;FALSE, ...)</div>
+<div>"biips_diagnosis"(object, type&nbsp;=&nbsp;"fsb", quiet&nbsp;=&nbsp;FALSE, ...)</div>
+<div>biips_summary(object, ...)</div>
+<div>"biips_summary"(object, probs&nbsp;=&nbsp;c(), order&nbsp;=&nbsp;ifelse(mode, 0, 1), mode&nbsp;=&nbsp;all(object$discrete), ...)</div>
+<div>"biips_summary"(object, ...)</div>
+<div>"biips_summary"(object, ...)</div>
+<div>biips_table(x, ...)</div>
+<div>"biips_table"(x, ...)</div>
+<div>biips_density(x, ...)</div>
+<div>"biips_density"(x, bw&nbsp;=&nbsp;"nrd0", ...)</div>
+<div>"biips_table"(x, ...)</div>
+<div>"biips_density"(x, bw&nbsp;=&nbsp;"nrd0", adjust&nbsp;=&nbsp;1, ...)</div>
+<div>"biips_table"(x, ...)</div>
+<div>"biips_density"(x, bw&nbsp;=&nbsp;"nrd0", ...)</div>
+<div>"summary"(object, ...)</div>
+<div>"summary"(object, ...)</div>
+<div>"summary"(object, ...)</div>
+<div>"density"(x, ...)</div>
+<div>"density"(x, ...)</div>
+<div>"density"(x, ...)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>object,x</dt>
+      <dd>a <code>smcarray</code>, <code>smcarray.fsb</code> or
+<code>smcarray.fsb.list</code> object.</dd>
+      <dt>...</dt>
+      <dd>additional arguments to be passed to the default methods. See
+  <code><a href='http://www.inside-r.org/r-doc/stats/density'>density</a></code>, <code><a href='http://www.inside-r.org/r-doc/base/table'>table</a></code></dd>
+      <dt>ess_thres</dt>
+      <dd>integer. Threshold on the Effective Sample Size (ESS). If
+all the ESS components are over <code>ess_thres</code>, the diagnostic is
+<code>'GOOD'</code>, otherwise it is <code>'BAD'</code>. (default=30).</dd>
+      <dt>quiet</dt>
+      <dd>logical. Disable message display. (default=<code>FALSE</code>).</dd>
+      <dt>type</dt>
+      <dd>string containing the characters <code>'f'</code> (fitering),
+<code>'s'</code> (smoothing) and/or <code>'b'</code> (backward smoothing).
+Select the corresponding members of the input to be analysed.
+(default = <code>'fsb'</code>).</dd>
+      <dt>probs</dt>
+      <dd>vector of reals. probability levels in ]0,1[ for quantiles.
+(default = <code>c()</code>)</dd>
+      <dt>order</dt>
+      <dd>integer. Moment statistics of order below or equal to
+<code>order</code> are returned. (default = 0 if all the components are discrete
+variables and 1 otherwise)</dd>
+      <dt>mode</dt>
+      <dd>logical. Activate computation of the mode, i.e. the most
+frequent value among the particles. (default = <code>TRUE</code> if all the components
+are discrete variables and <code>FALSE</code> otherwise)</dd>
+      <dt>bw</dt>
+      <dd>either a real with the smoothing bandwidth to be used or a string
+giving a rule to choose the bandwidth. See <code><a href='http://www.inside-r.org/r-doc/stats/bandwidth'>bw.nrd</a></code>.
+(default=<code>'nrd0'</code>)</dd>
+      <dt>adjust</dt>
+      <dd>scale factor for the bandwidth. the bandwidth used is actually
+<code>adjust*bw</code>. This makes it easy to specify values like &#145;half
+the default&#146; bandwidth. (default = 1)</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+The methods apply identically to <code>smcarray</code>, <code>smcarray.fsb</code> or
+  <code>smcarray.fsb.list</code> objects and return a named list with the same
+  named members as the input object.</p>
+  
+      <p>The function <code>is.smcarray</code> returns <code>TRUE</code> if the object is of class <code>smcarray</code>.</p>
+  
+      <p>The function <code>is.smcarray.fsb</code> returns <code>TRUE</code> if the object
+  is of class <code>smcarray.fsb</code>.</p>
+  
+      <p>The function <code>is.smcarray.fsb.list</code> returns <code>TRUE</code> if the
+  object is of class <code>smcarray.fsb.list</code>.</p>
+  
+      <p>The method <code>biips_diagnosis</code> prints diagnosis of the SMC output
+  and returns the minimum ESS value.</p>
+  
+      <p>The method <code>biips_summary</code> returns univariate marginal
+  statistics. The output innermost members are objects of class
+  <code>summary.smcarray</code>. Assuming <code>dim</code> is the dimension of the
+  variable, the <code>summary.smcarray</code> object is a list with the following
+  members:
+  <dt>mean</dt><dd>array of size <code>dim</code>. The mean if <code>order>=1</code>.</dd></p>
+  
+      <p><dt>var</dt><dd>array of size <code>dim</code>. The variance, if <code>order>=2</code>.</dd></p>
+  
+      <p><dt>skew</dt><dd>array of size <code>dim</code>. The skewness, if <code>order>=3</code>.</dd></p>
+  
+      <p><dt>kurt</dt><dd>array of size <code>dim</code>. The kurtosis, if <code>order>=4</code>.</dd></p>
+  
+      <p><dt>probs</dt><dd>vector of quantile probabilities.</dd></p>
+  
+      <p><dt>quant</dt><dd>list of arrays of size <code>dim</code> for each probability level
+      in <code>probs</code>. The quantile values, if <code>probs</code> is not empty.</dd></p>
+  
+      <p><dt>mode</dt><dd>array of size <code>dim</code>. The most frequent values for
+      discrete components.</dd></p>
+  
+      <p>The method <code>biips_table</code> returns univariate marginal frequency
+  tables or probability mass estimates of discrete variables. The output
+  innermost members are objects of class <code>table.smcarray</code>.</p>
+  
+      <p>The method <code>biips_density</code> returns univariate marginal kernel
+  density estimates. The output innermost members are objects of class
+  <code>density.smcarray</code>.</p>
+  
+      <p>The method <code>summary</code> is an alias for <code>biips_summary</code>.</p>
+  
+      <p>The method <code>density</code> is an alias for <code>biips_density</code>.
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>A <code>smcarray</code> object is used by the
+<code><a href='biips_smc_samples.html'>biips_smc_samples</a></code> function to represent SMC output or particles
+of a given variable.</p>
+  
+      <p>A <code>smcarray.fsb</code> object is a named list of <code>smcarray</code> objects with
+different types of monitoring for the same variable. Members in this list
+have names <code>f</code> (filtering), <code>s</code> (smoothing) or <code>b</code> (backward
+smoothing).</p>
+  
+      <p>A <code>smcarray.fsb.list</code> object is a named list of <code>smcarray.fsb</code>
+objects for different monitored variables. It might also contain a member
+named <code>log_marg_like</code> with an estimate of the log marginal likelihood.</p>
+  
+      <p>The methods apply identically to <code>smcarray</code>, <code>smcarray.fsb</code> or
+<code>smcarray.fsb.list</code> objects and return a named list with the same named
+members as the input object.</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>Assuming <code>dim</code> is the dimension of the monitored variable, a
+  <code>smcarray</code> object is a list with the members:
+  <dl>
+    <dt>values</dt><dd>array of dimension <code>c(dim, n_part)</code> with the values of
+      the particles.</dd></p>
+  
+      <p><dt>weights</dt><dd>array of dimension <code>c(dim, n_part)</code> with the weights
+      of the particles.</dd></p>
+  
+      <p><dt>ess</dt><dd>array of dimension <code>dim</code> with Effective Sample Sizes of
+      the particles set.</dd></p>
+  
+      <p><dt>discrete</dt><dd>array of dimension <code>dim</code> with logicals indicating
+      discreteness of each component.</dd></p>
+  
+      <p><dt>iterations</dt><dd>array of dimension <code>dim</code> with sampling iterations
+      of each component.</dd></p>
+  
+      <p><dt>conditionals</dt><dd>lists of the contitioning variables (observations). Its
+      value is:
+      <ul>
+<li> for filtering: a list of dimension <code>dim</code>. each member is a
+          character vector with the respective conditioning variables of
+          the node array component.
+        </li>
+<li> for smoothing/backward_smoothing: a character vector, the same
+          for all the components of the node array.
+      </li>
+</ul>
+</dd></p>
+  
+      <p><dt>name</dt><dd>string with the name of the variable.</dd></p>
+  
+      <p><dt>lower</dt><dd>vector with the lower bounds of the variable.</dd></p>
+  
+      <p><dt>upper</dt><dd>vector with the upper bounds of the variable.</dd></p>
+  
+      <p><dt>type</dt><dd>string with the type of monitor (<code>'filtering'</code>,
+      <code>'smoothing'</code> or <code>'backward_smoothing'</code>).</dd></p>
+  
+      <p></dl></p>
+  
+      <p>For instance, if <code>out_smc</code> is a <code>smcarray.fsb.list</code> object, one can
+  access the values of the smoothing particles for the variable <code>'x'</code>
+  with: <code>out_smc$x$s$values</code>.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>modelfile &lt;- system.file(&#39;extdata&#39;, &#39;hmm.bug&#39;, package = &#39;Rbiips&#39;)
+stopifnot(nchar(modelfile) &gt; 0)
+cat(readLines(modelfile), sep = &#39;\n&#39;)
+</div>
+<div class='output'>var c_true[tmax], x_true[tmax], c[tmax], x[tmax], y[tmax]
+
+data
+{
+  x_true[1] ~ dnorm(0, 1/5)
+  y[1] ~ dnorm(x_true[1], exp(logtau_true))
+  for (t in 2:tmax)
+  {
+    c_true[t] ~ dcat(p)
+    x_true[t] ~ dnorm(0.5*x_true[t-1]+25*x_true[t-1]/(1+x_true[t-1]^2)+8*cos(1.2*(t-1)), ifelse(c_true[t]==1, 1/10, 1/100))
+    y[t] ~ dnorm(x_true[t]/4, exp(logtau_true))
+  }
+}
+
+model
+{
+  logtau ~ dunif(-3, 3)
+  x[1] ~ dnorm(0, 1/5)
+  y[1] ~ dnorm(x[1], exp(logtau))
+  for (t in 2:tmax)
+  {
+    c[t] ~ dcat(p)
+    x[t] ~ dnorm(0.5*x[t-1]+25*x[t-1]/(1+x[t-1]^2)+8*cos(1.2*(t-1)), ifelse(c[t]==1, 1/10, 1/100))
+    y[t] ~ dnorm(x[t]/4, exp(logtau))
+  }
+}
+</div>
+<div class='input'>
+data &lt;- list(tmax = 10, p = c(.5, .5), logtau_true = log(1), logtau = log(1))
+model &lt;- biips_model(modelfile, data, sample_data = TRUE)
+</div>
+<div class='output'>* Parsing model in: /home/adrien-alea/workspace/biips-git/Rbiips/inst/extdata/hmm.bug
+* Compiling data graph
+  Declaring variables
+  Resolving undeclared variables
+  Allocating nodes
+  Graph size: 169
+  Sampling data
+  Reading data back into data table
+* Compiling model graph
+  Declaring variables
+  Resolving undeclared variables
+  Allocating nodes
+  Graph size: 180
+</div>
+<div class='input'>
+n_part &lt;- 100
+out_smc &lt;- biips_smc_samples(model, c(&#39;x&#39;, &#39;c[2:10]&#39;), n_part, type = &#39;fs&#39;,
+                             rs_thres = 0.5, rs_type = &#39;stratified&#39;)
+</div>
+<div class='output'>* Assigning node samplers
+* Running SMC forward sampler with 100 particles
+  |--------------------------------------------------| 100%
+  |**************************************************| 10 iterations in 0.01 s
+</div>
+<div class='input'>
+#&#39; Manipulate `smcarray.fsb.list` object
+is.smcarray.fsb.list(out_smc)
+</div>
+<div class='output'>[1] TRUE
+</div>
+<div class='input'>names(out_smc)
+</div>
+<div class='output'>[1] &quot;c[2:10]&quot;       &quot;x&quot;             &quot;log_marg_like&quot;
+</div>
+<div class='input'>out_smc
+</div>
+<div class='output'>c[2:10] filtering smcarray:
+$mode
+[1] 1 1 1 2 2 2 2 2 1
+
+Marginalizing over: particle(100) 
+
+c[2:10] smoothing smcarray:
+$mode
+[1] 1 1 1 2 2 2 2 2 1
+
+Marginalizing over: particle(100) 
+
+
+x filtering smcarray:
+$mean
+ [1]  -3.152971  -5.651273 -19.362103 -19.004266 -27.015350  12.389022   5.102537  -2.484359 -26.149661 -15.149581
+
+Marginalizing over: particle(100) 
+
+x smoothing smcarray:
+$mean
+ [1]  -3.446275  -5.999033 -19.359611 -20.046028 -25.937169  11.370694   5.979801  -3.754768 -26.140134 -15.149581
+
+Marginalizing over: particle(100) 
+
+
+Log-marginal likelihood:  -39.4139 
+</div>
+<div class='input'>biips_diagnosis(out_smc)
+</div>
+<div class='output'>* Diagnosis of variable: c[2:10] 
+  Filtering: GOOD
+  Smoothing: POOR
+    The minimum effective sample size is too low: 21.46232 
+    Estimates may be poor for some variables.
+    You should increase the number of particles
+.* Diagnosis of variable: x[1:10] 
+  Filtering: GOOD
+  Smoothing: POOR
+    The minimum effective sample size is too low: 21.46232 
+    Estimates may be poor for some variables.
+    You should increase the number of particles
+.</div>
+<div class='input'>biips_summary(out_smc)
+</div>
+<div class='output'>c[2:10] filtering smcarray:
+$mode
+[1] 1 1 1 2 2 2 2 2 1
+
+Marginalizing over: particle(100) 
+
+c[2:10] smoothing smcarray:
+$mode
+[1] 1 1 1 2 2 2 2 2 1
+
+Marginalizing over: particle(100) 
+
+
+x filtering smcarray:
+$mean
+ [1]  -3.152971  -5.651273 -19.362103 -19.004266 -27.015350  12.389022   5.102537  -2.484359 -26.149661 -15.149581
+
+Marginalizing over: particle(100) 
+
+x smoothing smcarray:
+$mean
+ [1]  -3.446275  -5.999033 -19.359611 -20.046028 -25.937169  11.370694   5.979801  -3.754768 -26.140134 -15.149581
+
+Marginalizing over: particle(100) 
+
+
+</div>
+<div class='input'>
+#&#39; Manipulate `smcarray.fsb` object
+is.smcarray.fsb(out_smc$x)
+</div>
+<div class='output'>[1] TRUE
+</div>
+<div class='input'>names(out_smc$x)
+</div>
+<div class='output'>[1] &quot;f&quot; &quot;s&quot;
+</div>
+<div class='input'>out_smc$x
+</div>
+<div class='output'>filtering smcarray:
+$mean
+ [1]  -3.152971  -5.651273 -19.362103 -19.004266 -27.015350  12.389022   5.102537  -2.484359 -26.149661 -15.149581
+
+Marginalizing over: particle(100) 
+
+smoothing smcarray:
+$mean
+ [1]  -3.446275  -5.999033 -19.359611 -20.046028 -25.937169  11.370694   5.979801  -3.754768 -26.140134 -15.149581
+
+Marginalizing over: particle(100) 
+
+</div>
+<div class='input'>biips_diagnosis(out_smc$x)
+</div>
+<div class='output'>* Diagnosis of variable: x[1:10] 
+  Filtering: GOOD
+  Smoothing: POOR
+    The minimum effective sample size is too low: 21.46232 
+    Estimates may be poor for some variables.
+    You should increase the number of particles
+.</div>
+<div class='input'>summ_smc_x &lt;- biips_summary(out_smc$x, order = 2, probs = c(.025, .975))
+summ_smc_x
+</div>
+<div class='output'>filtering smcarray:
+$mean
+ [1]  -3.152971  -5.651273 -19.362103 -19.004266 -27.015350  12.389022   5.102537  -2.484359 -26.149661 -15.149581
+
+$var
+ [1]  0.8059488  7.6742794 12.1518709  7.8196541 11.2749603 21.9098449 20.7971618 18.1219330 11.5776850  8.5925060
+
+$probs
+[1] 0.025 0.975
+
+$quant
+$quant$`0.025`
+ [1]  -4.707993 -11.423757 -26.308112 -23.538736 -32.385196   2.890245  -2.974571 -12.195438 -32.331196 -21.458397
+
+$quant$`0.975`
+ [1]  -1.4561707  -0.6176022 -12.3823412 -13.5243914 -18.0172792  19.8672615  13.0012874   4.8252531 -18.9865694  -9.8570704
+
+
+Marginalizing over: particle(100) 
+
+smoothing smcarray:
+$mean
+ [1]  -3.446275  -5.999033 -19.359611 -20.046028 -25.937169  11.370694   5.979801  -3.754768 -26.140134 -15.149581
+
+$var
+ [1]  0.8947209  7.1132437 14.4478043 12.6978250  8.1862491 18.1368948 14.6322283 11.4535071 10.9621615  8.5925060
+
+$probs
+[1] 0.025 0.975
+
+$quant
+$quant$`0.025`
+ [1]  -4.9854600 -10.7141525 -28.0464287 -25.6809889 -31.8923414   4.3158471  -0.3875639 -13.6027594 -31.8176202 -21.4583967
+
+$quant$`0.975`
+ [1]  -1.7812575  -1.0844845 -12.8640972 -13.7409787 -20.7613197  19.5712824  11.9017100  -0.3897253 -19.6339111  -9.8570704
+
+
+Marginalizing over: particle(100) 
+
+</div>
+<div class='input'>dens_smc_x &lt;- biips_density(out_smc$x, bw = &#39;nrd0&#39;, adjust = 1, n = 100)
+par(mfrow = c(2, 2))
+plot(dens_smc_x)
+</div>
+<p><img src='smcarray-object-28.png' alt='' width='540' height='400' /></p>
+<p><img src='smcarray-object-29.png' alt='' width='540' height='400' /></p>
+<div class='input'>
+is.smcarray.fsb(out_smc[[&#39;c[2:10]&#39;]])
+</div>
+<div class='output'>[1] TRUE
+</div>
+<div class='input'>names(out_smc[[&#39;c[2:10]&#39;]])
+</div>
+<div class='output'>[1] &quot;f&quot; &quot;s&quot;
+</div>
+<div class='input'>out_smc[[&#39;c[2:10]&#39;]]
+</div>
+<div class='output'>filtering smcarray:
+$mode
+[1] 1 1 1 2 2 2 2 2 1
+
+Marginalizing over: particle(100) 
+
+smoothing smcarray:
+$mode
+[1] 1 1 1 2 2 2 2 2 1
+
+Marginalizing over: particle(100) 
+
+</div>
+<div class='input'>biips_diagnosis(out_smc[[&#39;c[2:10]&#39;]])
+</div>
+<div class='output'>* Diagnosis of variable: c[2:10] 
+  Filtering: GOOD
+  Smoothing: POOR
+    The minimum effective sample size is too low: 21.46232 
+    Estimates may be poor for some variables.
+    You should increase the number of particles
+.</div>
+<div class='input'>summ_smc_c &lt;- biips_summary(out_smc[[&#39;c[2:10]&#39;]])
+summ_smc_c
+</div>
+<div class='output'>filtering smcarray:
+$mode
+[1] 1 1 1 2 2 2 2 2 1
+
+Marginalizing over: particle(100) 
+
+smoothing smcarray:
+$mode
+[1] 1 1 1 2 2 2 2 2 1
+
+Marginalizing over: particle(100) 
+
+</div>
+<div class='input'>table_smc_c &lt;- biips_table(out_smc[[&#39;c[2:10]&#39;]])
+par(mfrow = c(2, 2))
+</div>
+<p><img src='smcarray-object-41.png' alt='' width='540' height='400' /></p>
+<div class='input'>plot(table_smc_c)
+</div>
+<p><img src='smcarray-object-43.png' alt='' width='540' height='400' /></p>
+<p><img src='smcarray-object-44.png' alt='' width='540' height='400' /></p>
+<div class='input'>
+#&#39; Manipulate `smcarray` object
+is.smcarray(out_smc$x$f)
+</div>
+<div class='output'>[1] TRUE
+</div>
+<div class='input'>names(out_smc$x$f)
+</div>
+<div class='output'> [1] &quot;values&quot;       &quot;weights&quot;      &quot;ess&quot;          &quot;discrete&quot;     &quot;iterations&quot;   &quot;conditionals&quot; &quot;name&quot;         &quot;lower&quot;       
+ [9] &quot;upper&quot;        &quot;type&quot;        
+</div>
+<div class='input'>out_smc$x$f
+</div>
+<div class='output'>smcarray:
+$mean
+ [1]  -3.152971  -5.651273 -19.362103 -19.004266 -27.015350  12.389022   5.102537  -2.484359 -26.149661 -15.149581
+
+Marginalizing over: particle(100) 
+</div>
+<div class='input'>out_smc$x$s
+</div>
+<div class='output'>smcarray:
+$mean
+ [1]  -3.446275  -5.999033 -19.359611 -20.046028 -25.937169  11.370694   5.979801  -3.754768 -26.140134 -15.149581
+
+Marginalizing over: particle(100) 
+</div>
+<div class='input'>biips_diagnosis(out_smc$x$f)
+</div>
+<div class='output'>* Diagnosis of variable: x[1:10] 
+  Filtering: GOOD
+</div>
+<div class='input'>biips_diagnosis(out_smc$x$s)
+</div>
+<div class='output'>* Diagnosis of variable: x[1:10] 
+  Smoothing: POOR
+    The minimum effective sample size is too low: 21.46232 
+    Estimates may be poor for some variables.
+    You should increase the number of particles
+.</div>
+<div class='input'>biips_summary(out_smc$x$f)
+</div>
+<div class='output'>smcarray:
+$mean
+ [1]  -3.152971  -5.651273 -19.362103 -19.004266 -27.015350  12.389022   5.102537  -2.484359 -26.149661 -15.149581
+
+Marginalizing over: particle(100) 
+</div>
+<div class='input'>biips_summary(out_smc$x$s)
+</div>
+<div class='output'>smcarray:
+$mean
+ [1]  -3.446275  -5.999033 -19.359611 -20.046028 -25.937169  11.370694   5.979801  -3.754768 -26.140134 -15.149581
+
+Marginalizing over: particle(100) 
+</div>
+<div class='input'>par(mfrow = c(2, 2))
+</div>
+<p><img src='smcarray-object-62.png' alt='' width='540' height='400' /></p>
+<div class='input'>plot(biips_density(out_smc$x$f))
+</div>
+<p><img src='smcarray-object-64.png' alt='' width='540' height='400' /></p>
+<p><img src='smcarray-object-65.png' alt='' width='540' height='400' /></p>
+<div class='input'>par(mfrow = c(2, 2))
+</div>
+<p><img src='smcarray-object-67.png' alt='' width='540' height='400' /></p>
+<div class='input'>plot(biips_density(out_smc$x$s))
+</div>
+<p><img src='smcarray-object-69.png' alt='' width='540' height='400' /></p>
+<p><img src='smcarray-object-70.png' alt='' width='540' height='400' /></p>
+<div class='input'>
+par(mfrow = c(2, 2))
+</div>
+<p><img src='smcarray-object-72.png' alt='' width='540' height='400' /></p>
+<div class='input'>plot(biips_table(out_smc[[&#39;c[2:10]&#39;]]$f))
+</div>
+<p><img src='smcarray-object-74.png' alt='' width='540' height='400' /></p>
+<p><img src='smcarray-object-75.png' alt='' width='540' height='400' /></p>
+<div class='input'>par(mfrow = c(2, 2))
+</div>
+<p><img src='smcarray-object-77.png' alt='' width='540' height='400' /></p>
+<div class='input'>plot(biips_table(out_smc[[&#39;c[2:10]&#39;]]$s))
+</div>
+<p><img src='smcarray-object-79.png' alt='' width='540' height='400' /></p>
+<p><img src='smcarray-object-80.png' alt='' width='540' height='400' /></p>
+<p><img src='smcarray-object-81.png' alt='' width='540' height='400' /></p></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>biips_density</li><li>biips_density.smcarray</li><li>biips_density.smcarray.fsb</li><li>biips_density.smcarray.fsb.list</li><li>biips_diagnosis</li><li>biips_diagnosis.smcarray</li><li>biips_diagnosis.smcarray.fsb</li><li>biips_diagnosis.smcarray.fsb.list</li><li>biips_summary</li><li>biips_summary.smcarray</li><li>biips_summary.smcarray.fsb</li><li>biips_summary.smcarray.fsb.list</li><li>biips_table</li><li>biips_table.smcarray</li><li>biips_table.smcarray.fsb</li><li>biips_table.smcarray.fsb.list</li><li>density.smcarray</li><li>density.smcarray.fsb</li><li>density.smcarray.fsb.list</li><li>is.smcarray</li><li>is.smcarray.fsb</li><li>is.smcarray.fsb.list</li><li>smcarray</li><li>smcarray-object</li><li>smcarray.fsb</li><li>smcarray.fsb-object</li><li>smcarray.fsb.list</li><li>smcarray.fsb.list-object</li><li>summary.smcarray</li><li>summary.smcarray.fsb</li><li>summary.smcarray.fsb.list</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+    <h2>See also</h2>
+    
+<code><a href='http://www.inside-r.org/r-doc/stats/density'>density</a></code>
+
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

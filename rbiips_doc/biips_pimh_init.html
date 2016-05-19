@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>biips_pimh_init. Rbiips 0.10.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">Rbiips 0.10.0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Create a PIMH object.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>biips_pimh_init(model, variable_names)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>model</dt>
+      <dd><code>biips</code> model object as returned by
+<code><a href='biips_model.html'>biips_model</a></code>.</dd>
+      <dt>variable_names</dt>
+      <dd>character vector. The names of the unobserved
+  variables to monitor. Names can contain subset indices which must define a
+  valid subset of the variables of the model, e.g.: <code>c('var1',</code>
+  <code>'var2[1]',</code> <code>'var3[1:10]',</code> <code>'var4[1, 5:10, 3]')</code>.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+The function <code>biips_pimh_init</code> returns an object of class
+  <code>pimh</code> which can be used to generate samples
+  from the posterior distribution of the monitored variables in
+  <code>variable_names</code>.</p>
+  
+      <p>An object of class <code>pimh</code> is a list of functions that share a common
+  environment. These functions are meant for internal purpose only. They are
+  used to query information on the current state of the algorithm.
+  <dt>model()</dt><dd>Get the <code><a href='biips-object.html'>biips</a></code> model object.</dd></p>
+  
+      <p><dt>variable_names()</dt><dd>Get a character vector with the names of
+      the monitored variables.</dd></p>
+  
+      <p><dt>sample(sample)</dt><dd>Get and set the current sample.</dd></p>
+  
+      <p><dt>log_marg_like(log_marg_like)</dt><dd>Get and set the current value
+      of the log marginal likelihood.</dd></p>
+  
+      <p></dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>The function <code>biips_pimh_init</code> initializes the Particle Independent
+Metropolis-Hastings (PIMH) algorithm.</p>
+  
+      <p>The PIMH algorithm provides MCMC samples of the variables in <code>variable_names</code>,
+using a SMC algorithm as proposal distribution in an independent
+Metropolis-Hastings (MH) algorithm.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>modelfile &lt;- system.file(&#39;extdata&#39;, &#39;hmm.bug&#39;, package = &#39;Rbiips&#39;)
+stopifnot(nchar(modelfile) &gt; 0)
+cat(readLines(modelfile), sep = &#39;\n&#39;)
+</div>
+<div class='output'>var c_true[tmax], x_true[tmax], c[tmax], x[tmax], y[tmax]
+
+data
+{
+  x_true[1] ~ dnorm(0, 1/5)
+  y[1] ~ dnorm(x_true[1], exp(logtau_true))
+  for (t in 2:tmax)
+  {
+    c_true[t] ~ dcat(p)
+    x_true[t] ~ dnorm(0.5*x_true[t-1]+25*x_true[t-1]/(1+x_true[t-1]^2)+8*cos(1.2*(t-1)), ifelse(c_true[t]==1, 1/10, 1/100))
+    y[t] ~ dnorm(x_true[t]/4, exp(logtau_true))
+  }
+}
+
+model
+{
+  logtau ~ dunif(-3, 3)
+  x[1] ~ dnorm(0, 1/5)
+  y[1] ~ dnorm(x[1], exp(logtau))
+  for (t in 2:tmax)
+  {
+    c[t] ~ dcat(p)
+    x[t] ~ dnorm(0.5*x[t-1]+25*x[t-1]/(1+x[t-1]^2)+8*cos(1.2*(t-1)), ifelse(c[t]==1, 1/10, 1/100))
+    y[t] ~ dnorm(x[t]/4, exp(logtau))
+  }
+}
+</div>
+<div class='input'>
+data &lt;- list(tmax = 10, p = c(.5, .5), logtau_true = log(1), logtau = log(1))
+model &lt;- biips_model(modelfile, data)
+</div>
+<div class='output'>* Parsing model in: /home/adrien-alea/workspace/biips-git/Rbiips/inst/extdata/hmm.bug
+* Compiling data graph
+  Declaring variables
+  Resolving undeclared variables
+  Allocating nodes
+  Graph size: 169
+  Sampling data
+  Reading data back into data table
+* Compiling model graph
+  Declaring variables
+  Resolving undeclared variables
+  Allocating nodes
+  Graph size: 180
+</div>
+<div class='input'>
+n_part &lt;- 50
+obj_pimh &lt;- biips_pimh_init(model, c(&#39;x&#39;, &#39;c[2:10]&#39;))  # Initialize
+</div>
+<div class='output'>* Initializing PIMH
+</div>
+<div class='input'>is.pimh(obj_pimh)
+</div>
+<div class='output'>[1] TRUE
+</div>
+<div class='input'>out_pimh_burn &lt;- biips_pimh_update(obj_pimh, 100, n_part)  # Burn-in
+</div>
+<div class='output'>* Updating PIMH with 50 particles
+  |--------------------------------------------------| 100%
+  |**************************************************| 100 iterations in 0.45 s
+</div>
+<div class='input'>out_pimh &lt;- biips_pimh_samples(obj_pimh, 100, n_part)  # Samples
+</div>
+<div class='output'>* Generating PIMH samples with 50 particles
+  |--------------------------------------------------| 100%
+  |**************************************************| 100 iterations in 0.41 s
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>biips_pimh_init</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+    <h2>See also</h2>
+    
+<code><a href='biips_model.html'>biips_model</a></code>, <code><a href='pimh-object.html'>biips_pimh_update</a></code>,
+  <code><a href='pimh-object.html'>biips_pimh_samples</a></code>
+
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title: Biips
+description: > # this means to ignore newlines until "baseurl:"
+  Biips project homepage.
+  Bayesian inference with interacting particle systems.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://biips.github.io" # the base hostname & protocol for your site
+
+# Build settings
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: "page"
+
+markdown: kramdown
+
+
+# Custom variables
+#########################
+copyright: true
+#ganalytics_id: UA-45407741-5
+tagline: Bayesian inference with interacting particle systems
+lang: en
+#theme: minimal
+
+author:
+  name: Inria
+  email: biips-project@lists.gforge.inria.fr
+  github_url:  https://github.com/biips/

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>biips_smc_sensitivity. Rbiips 0.10.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">Rbiips 0.10.0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Sensitivity analysis of parameters with SMC</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>biips_smc_sensitivity(object, param_values, n_part, ...)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>object</dt>
+      <dd><code>biips</code> model object as returned by
+<code><a href='biips_model.html'>biips_model</a></code>.</dd>
+      <dt>param_values</dt>
+      <dd>named list of numeric values. Each member is named after
+a parameter for which we want to study sensitivity. Each member value is a
+vector or array whose last dimension is equal to the number of values for
+which we want to study sensitivity.</dd>
+      <dt>n_part</dt>
+      <dd>integer. Number of particles.</dd>
+      <dt>...</dt>
+      <dd>Additional arguments to be passed to the SMC
+  algorithm such as <code>rs_thres</code> and <code>rs_type</code>.
+  See <code><a href='biips_smc_samples.html'>biips_smc_samples</a></code>  for more details.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+<code>biips_smc_sensitivity</code> returns a list with the following
+  members:
+  <dt>log_marg_like</dt><dd>vector of log marginal likelihood estimates
+    at the different values of the parameters.</dd></p>
+  
+      <p><dt>log_marg_like_pen</dt><dd>vector of penalized log marginal likelihood
+      estimates at the different values of the parameters.</dd></p>
+  
+      <p><dt>max_param</dt><dd>parameters value with maximum <code>log_marg_like</code>.</dd></p>
+  
+      <p><dt>max_log_marg_like</dt><dd>maximum <code>log_marg_like</code> value.</dd></p>
+  
+      <p><dt>max_param_pen</dt><dd>parameters value with maximum <code>log_marg_like_pen</code>.</dd></p>
+  
+      <p><dt>max_log_marg_like_pen</dt><dd>maximum <code>log_marg_like_pen</code> value.</dd></p>
+  
+      <p></dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Sensitivity analysis of parameters with SMC</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>modelfile &lt;- system.file(&#39;extdata&#39;, &#39;hmm.bug&#39;, package = &#39;Rbiips&#39;)
+stopifnot(nchar(modelfile) &gt; 0)
+cat(readLines(modelfile), sep = &#39;\n&#39;)
+</div>
+<div class='output'>var c_true[tmax], x_true[tmax], c[tmax], x[tmax], y[tmax]
+
+data
+{
+  x_true[1] ~ dnorm(0, 1/5)
+  y[1] ~ dnorm(x_true[1], exp(logtau_true))
+  for (t in 2:tmax)
+  {
+    c_true[t] ~ dcat(p)
+    x_true[t] ~ dnorm(0.5*x_true[t-1]+25*x_true[t-1]/(1+x_true[t-1]^2)+8*cos(1.2*(t-1)), ifelse(c_true[t]==1, 1/10, 1/100))
+    y[t] ~ dnorm(x_true[t]/4, exp(logtau_true))
+  }
+}
+
+model
+{
+  logtau ~ dunif(-3, 3)
+  x[1] ~ dnorm(0, 1/5)
+  y[1] ~ dnorm(x[1], exp(logtau))
+  for (t in 2:tmax)
+  {
+    c[t] ~ dcat(p)
+    x[t] ~ dnorm(0.5*x[t-1]+25*x[t-1]/(1+x[t-1]^2)+8*cos(1.2*(t-1)), ifelse(c[t]==1, 1/10, 1/100))
+    y[t] ~ dnorm(x[t]/4, exp(logtau))
+  }
+}
+</div>
+<div class='input'>
+data &lt;- list(tmax = 10, p = c(.5, .5), logtau_true = log(1), logtau = log(1))
+model &lt;- biips_model(modelfile, data)
+</div>
+<div class='output'>* Parsing model in: /home/adrien-alea/workspace/biips-git/Rbiips/inst/extdata/hmm.bug
+* Compiling data graph
+  Declaring variables
+  Resolving undeclared variables
+  Allocating nodes
+  Graph size: 169
+  Sampling data
+  Reading data back into data table
+* Compiling model graph
+  Declaring variables
+  Resolving undeclared variables
+  Allocating nodes
+  Graph size: 180
+</div>
+<div class='input'>
+n_part &lt;- 50
+logtau_val &lt;- -10:10
+out_sens &lt;- biips_smc_sensitivity(model, list(logtau = logtau_val), n_part)
+</div>
+<div class='output'>* Analyzing sensitivity with 50 particles
+  |--------------------------------------------------| 100%
+  |**************************************************| 21 iterations in 0.10 s
+</div>
+<div class='input'>
+par(mfrow = c(2, 1))
+plot(logtau_val, out_sens$log_marg_like, type = &#39;l&#39;, col = &#39;blue&#39;,
+     xlab = &#39;logtau&#39;, ylab = &#39;log p(y|logtau) &#39;, main = &#39;SMC sensitivity&#39;)
+points(data$logtau, min(out_sens$log_marg_like), pch = 17, col = &#39;green&#39;)
+
+plot(logtau_val, out_sens$log_marg_like_pen, type = &#39;l&#39;, col = &#39;blue&#39;,
+     xlab = &#39;logtau&#39;, ylab = &#39;log p(y|logtau) + log p(logtau)&#39;)
+</div>
+<div class='input'>plml &lt;- out_sens$log_marg_like_pen
+ymin &lt;- min(plml[is.finite(plml)])
+points(data$logtau, ymin, pch = 17, col = &#39;green&#39;)
+</div>
+<p><img src='biips_smc_sensitivity-9.png' alt='' width='540' height='400' /></p></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>biips_smc_sensitivity</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+    <h2>See also</h2>
+    
+<code><a href='biips_model.html'>biips_model</a></code>, <code><a href='biips_smc_samples.html'>biips_smc_samples</a></code>
+
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

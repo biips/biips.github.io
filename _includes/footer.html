@@ -1,0 +1,32 @@
+<footer class="site-footer">
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+
+      <div class="footer-col footer-col-1">
+        {% if site.copyright %}
+        Copyright <i class="fa fa-copyright"></i> <time datetime="{{ site.time | date_to_xmlschema }}">{{ site.time | date: '%Y' }} {{ site.author.name }}</time></li>
+        {% endif %}
+
+        <ul class="social-media-list">
+          <li>
+            {% if site.author.github_url %}
+            View on GitHub <span class="fs-150">{% include fa-url.html icon="github" url=site.author.github_url %}</span>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <a href="http://www.inria.fr/centre/bordeaux"><img src="/img/inria_95px.png" alt="Inria Bordeaux"></a>
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>

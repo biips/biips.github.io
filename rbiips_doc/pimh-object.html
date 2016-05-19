@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>pimh-object. Rbiips 0.10.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">Rbiips 0.10.0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Manipulate PIMH objects.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>is.pimh(object)</div>
+<div>"biips_pimh_update"(object, n_iter, n_part, thin&nbsp;=&nbsp;1, output&nbsp;=&nbsp;"l", ...)</div>
+<div>"biips_pimh_samples"(object, n_iter, n_part, thin&nbsp;=&nbsp;1, output&nbsp;=&nbsp;"l", ...)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>object</dt>
+      <dd>a <code>pimh</code> object as returned by
+<code><a href='biips_pimh_init.html'>biips_pimh_init</a></code>.</dd>
+      <dt>n_iter</dt>
+      <dd>integer. Number of burn-in iterations.</dd>
+      <dt>n_part</dt>
+      <dd>integer. Number of particles used in SMC algorithms.</dd>
+      <dt>thin</dt>
+      <dd>integer. Thinning interval. Returns samples every <code>thin</code>
+iterations (default = 1)</dd>
+      <dt>output</dt>
+      <dd>string. Select additional members to be returned in the
+  <code><a href='mcmcarray-object.html'>mcmcarray.list</a></code> output. The string can contain several
+  characters in <code>('l', 'a')</code>. See details. (default = <code>'l'</code>)</dd>
+      <dt>...</dt>
+      <dd>Additional arguments to be passed to the SMC
+algorithm such as <code>rs_thres</code> and <code>rs_type</code>.
+See <code><a href='biips_smc_samples.html'>biips_smc_samples</a></code>  for more details.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+The function <code>is.pimh</code> returns <code>TRUE</code> if the object is of
+  class <code>pimh</code>.</p>
+  
+      <p>The methods <code>biips_pimh_update</code> and <code>biips_pimh_update</code>
+  return an object of class <code><a href='mcmcarray-object.html'>mcmcarray.list</a></code>.</p>
+  
+      <p><code>biips_pimh_samples</code> output contains one <code><a href='mcmcarray-object.html'>mcmcarray</a></code>
+  member for each monitored variable returned by the <code>variable_names()</code>
+  member function of the <code>pimh</code> object.</p>
+  
+      <p>If the <code>output</code> argument is not empty, the output contains
+  additional members. See details.</p>
+  
+      <p>The members of the <code><a href='mcmcarray-object.html'>mcmcarray.list</a></code> object are
+  <code><a href='mcmcarray-object.html'>mcmcarray</a></code> objects for different variables. Assuming <code>dim</code>
+  is the dimension of the monitored variable, the <code><a href='mcmcarray-object.html'>mcmcarray</a></code>
+  object is an array of dimension <code>c(dim, n_iter)</code> with the following
+  attributes (accessible with <code><a href='http://www.inside-r.org/r-doc/base/attr'>attr</a></code>):
+  <dl>
+    <dt>name</dt><dd>string with the name of the variable.</dd></p>
+  
+      <p><dt>lower</dt><dd>vector with the lower bounds of the variable.</dd></p>
+  
+      <p><dt>upper</dt><dd>vector with the upper bounds of the variable.</dd></p>
+  
+      <p></dl></p>
+  
+      <p></dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Manipulate PIMH objects.</p>
+  
+      <p>The method <code>biips_pimh_update</code> performs burn-in iterations for the PIMH
+algorithm.</p>
+  
+      <p>The method <code>biips_pimh_samples</code> performs iterations for the PIMH
+algorithm and returns samples.</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>The <code>output</code> string arguments can be used to query additional
+  members in the <code><a href='mcmcarray-object.html'>mcmcarray.list</a></code> output. If <code>output</code>
+  contains:
+  <dl>
+    <dt>l</dt><dd>returns member <code>log_marg_like</code>. <code><a href='mcmcarray-object.html'>mcmcarray</a></code>
+      with log marginal likelihood estimates over iterations.</dd></p>
+  
+      <p><dt>a</dt><dd>returns member <code>info$accept_rate</code>. <code><a href='mcmcarray-object.html'>mcmcarray</a></code> with acceptance rate over
+      iterations.</dd></p>
+  
+      <p></dl></p>
+  
+      <p></p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>modelfile &lt;- system.file(&#39;extdata&#39;, &#39;hmm.bug&#39;, package = &#39;Rbiips&#39;)
+stopifnot(nchar(modelfile) &gt; 0)
+cat(readLines(modelfile), sep = &#39;\n&#39;)
+</div>
+<div class='output'>var c_true[tmax], x_true[tmax], c[tmax], x[tmax], y[tmax]
+
+data
+{
+  x_true[1] ~ dnorm(0, 1/5)
+  y[1] ~ dnorm(x_true[1], exp(logtau_true))
+  for (t in 2:tmax)
+  {
+    c_true[t] ~ dcat(p)
+    x_true[t] ~ dnorm(0.5*x_true[t-1]+25*x_true[t-1]/(1+x_true[t-1]^2)+8*cos(1.2*(t-1)), ifelse(c_true[t]==1, 1/10, 1/100))
+    y[t] ~ dnorm(x_true[t]/4, exp(logtau_true))
+  }
+}
+
+model
+{
+  logtau ~ dunif(-3, 3)
+  x[1] ~ dnorm(0, 1/5)
+  y[1] ~ dnorm(x[1], exp(logtau))
+  for (t in 2:tmax)
+  {
+    c[t] ~ dcat(p)
+    x[t] ~ dnorm(0.5*x[t-1]+25*x[t-1]/(1+x[t-1]^2)+8*cos(1.2*(t-1)), ifelse(c[t]==1, 1/10, 1/100))
+    y[t] ~ dnorm(x[t]/4, exp(logtau))
+  }
+}
+</div>
+<div class='input'>
+data &lt;- list(tmax = 10, p = c(.5, .5), logtau_true = log(1), logtau = log(1))
+model &lt;- biips_model(modelfile, data)
+</div>
+<div class='output'>* Parsing model in: /home/adrien-alea/workspace/biips-git/Rbiips/inst/extdata/hmm.bug
+* Compiling data graph
+  Declaring variables
+  Resolving undeclared variables
+  Allocating nodes
+  Graph size: 169
+  Sampling data
+  Reading data back into data table
+* Compiling model graph
+  Declaring variables
+  Resolving undeclared variables
+  Allocating nodes
+  Graph size: 180
+</div>
+<div class='input'>
+n_part &lt;- 50
+obj_pimh &lt;- biips_pimh_init(model, c(&#39;x&#39;, &#39;c[2:10]&#39;))  # Initialize
+</div>
+<div class='output'>* Initializing PIMH
+</div>
+<div class='input'>is.pimh(obj_pimh)
+</div>
+<div class='output'>[1] TRUE
+</div>
+<div class='input'>out_pimh_burn &lt;- biips_pimh_update(obj_pimh, 100, n_part)  # Burn-in
+</div>
+<div class='output'>* Updating PIMH with 50 particles
+  |--------------------------------------------------| 100%
+  |**************************************************| 100 iterations in 0.43 s
+</div>
+<div class='input'>out_pimh &lt;- biips_pimh_samples(obj_pimh, 100, n_part)  # Samples
+</div>
+<div class='output'>* Generating PIMH samples with 50 particles
+  |--------------------------------------------------| 100%
+  |**************************************************| 100 iterations in 0.42 s
+</div>
+<div class='input'>
+summ_pimh_x &lt;- biips_summary(out_pimh$x, order = 2, probs = c(0.025, 0.975))
+dens_pimh_x &lt;- biips_density(out_pimh$x)
+summ_pimh_c &lt;- biips_summary(out_pimh[[&#39;c[2:10]&#39;]])
+table_pimh_c &lt;- biips_table(out_pimh[[&#39;c[2:10]&#39;]])
+
+par(mfrow = c(2, 1))
+plot(c(out_pimh_burn$log_marg_like, out_pimh$log_marg_like), type = &#39;l&#39;, col = &#39;blue&#39;,
+     xlab = &#39;PIMH iteration&#39;, ylab = &#39;log p(y)&#39;)
+
+t &lt;- 5
+plot(out_pimh$x[t, ], type = &#39;l&#39;, col = &#39;blue&#39;, xlab = &#39;PIMH iteration&#39;,
+     ylab = paste0(&#39;x[&#39;,t,&#39;]&#39;))
+</div>
+<div class='input'>points(0, model$data()$x_true[t], pch = 17, col = &#39;green&#39;)
+</div>
+<p><img src='pimh-object-15.png' alt='' width='540' height='400' /></p>
+<div class='input'>
+par(mfrow = c(2, 2))
+plot(model$data()$x_true, type = &#39;l&#39;, col = &#39;green&#39;, xlab = &#39;t&#39;, ylab = &#39;x[t]&#39;)
+lines(summ_pimh_x$mean, col = &#39;blue&#39;)
+matlines(matrix(unlist(summ_pimh_x$quant), data$tmax), lty = 2, col = &#39;blue&#39;)
+legend(&#39;topright&#39;, leg = c(&#39;true&#39;, &#39;PIMH estimate&#39;), lty = c(2, 1),
+       col = c(&#39;green&#39;, &#39;blue&#39;), bty = &#39;n&#39;)
+
+barplot(.5*(model$data()$c_true==1), col = &#39;green&#39;, border = NA, space = 0, offset = 1,
+        ylim=c(0,2), xlab=&#39;t&#39;, ylab=&#39;c[t]==1&#39;, axes = FALSE)
+axis(1, at=1:data$tmax-.5, labels=1:data$tmax)
+axis(2, line = 1, at=c(0,2), labels=NA)
+text(data$tmax/2, 1.75, &#39;true&#39;)
+barplot(.5*c(NA, summ_pimh_c$mode==1), col = &#39;blue&#39;, border = NA, space = 0,
+        axes = FALSE, add = TRUE)
+text(data$tmax/2, .75, &#39;PIMH mode&#39;)
+
+plot(dens_pimh_x[[t]], col=&#39;blue&#39;, main = , ylab = &#39;posterior density&#39;)
+points(model$data()$x_true[t], 0, pch = 17, col = &#39;green&#39;)
+
+plot(table_pimh_c[[t-1]], col=&#39;blue&#39;, ylab = &#39;posterior probability mass&#39;)
+</div>
+<div class='input'>points(model$data()$c_true[t], 0, pch = 17, col = &#39;green&#39;)
+</div>
+<p><img src='pimh-object-18.png' alt='' width='540' height='400' /></p></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>biips_pimh_samples</li><li>biips_pimh_samples.pimh</li><li>biips_pimh_update</li><li>biips_pimh_update.pimh</li><li>is.pimh</li><li>pimh</li><li>pimh-object</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+    <h2>See also</h2>
+    
+<code><a href='biips_pimh_init.html'>biips_pimh_init</a></code>
+
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>
