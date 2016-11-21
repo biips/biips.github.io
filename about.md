@@ -41,7 +41,6 @@ Features
 
 Roadmap
 -----------------------------------------------------------------------------
-- Optimization
 - Parallelization
 - Particle Gibbs algorithm
 
