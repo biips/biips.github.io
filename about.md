@@ -11,7 +11,7 @@ Biips
 - Version:       0.10.0
 - Last modified: 2014-11-25
 - Contact:       Biips project team <biips-project@lists.gforge.inria.fr>
-- Maintainer:    [Adrien Todeschini](http://adrien.tspace.fr/) <adrien.todeschini@inria.fr>
+- Maintainer:    [Adrien Todeschini](http://adrien.tspace.fr/) <adrien.todeschini@gmail.com>
 - License:       GPL-3
 - Website:       <https://biips.github.io/>
 
@@ -78,7 +78,7 @@ Biips code is Copyright (C) Inria, 2010-2014.
 
 Authors:
 
-- [Adrien Todeschini](https://sites.google.com/site/adrientodeschini/) (main developer)
+- [Adrien Todeschini](http://adrien.tspace.fr/) (main developer)
 - [Francois Caron](http://www.stats.ox.ac.uk/~caron/)
 - Marc Fuentes
 
@@ -94,5 +94,5 @@ Thanks
 -----------------------------------------------------------------------------
 - [ALEA project-team](http://alea.bordeaux.inria.fr) at [Inria Bordeaux](http://www.inria.fr/centre/bordeaux)
 - [Pierre Del Moral](http://web.maths.unsw.edu.au/~peterdel-moral/)
-- [Pierrick Legrand](http://www.sm.u-bordeaux2.fr/~legrand/)
+- [Pierrick Legrand](https://www.math.u-bordeaux.fr/~plegra100p/)
 - [Timothée Del Moral](http://rubis3.blogspot.fr/) (Biips logo design)
