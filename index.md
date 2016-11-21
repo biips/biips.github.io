@@ -6,7 +6,7 @@ navpos: 0
 
 <figure>
 <img src="img/biips_4_fuzz.png" alt="Biips logo" height="200px" style="margin:auto;display:block;">
-<figcaption style="text-align:right;"><i>Logo design: <a href="http://rubis3.blogspot.fr/">Timothée Del Moral</a></i></figcaption>
+<figcaption style="text-align:right;"><i>Logo by <a href="http://rubis3.blogspot.fr/">Timothée Del Moral</a></i></figcaption>
 </figure>
 
 # What is Biips?

@@ -94,4 +94,4 @@ Thanks
 - [ALEA project-team](http://alea.bordeaux.inria.fr) at [Inria Bordeaux](http://www.inria.fr/centre/bordeaux)
 - [Pierre Del Moral](http://web.maths.unsw.edu.au/~peterdel-moral/)
 - [Pierrick Legrand](https://www.math.u-bordeaux.fr/~plegra100p/)
-- [Timothée Del Moral](http://rubis3.blogspot.fr/) (Biips logo design)
+- [Timothée Del Moral](http://rubis3.blogspot.fr/) (Biips logo)
