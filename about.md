@@ -32,11 +32,11 @@ Features
     - SMC/particle algorithms for filtering and smoothing
     - Static parameter estimation using particle MCMC
     - Automatic choice of the proposal samplers
-- Core developped in C++
+- Core library in C++
 - R interface: Rbiips
 - Matlab/Octave interface: Matbiips
 - Easy language extensions with custom R and Matlab functions
-- Multi-platform: Linux, Windows, Mac OSX
+- Multi-platform: Linux, Windows, OSX
 - Free and open source (GPL)
 
 Roadmap
