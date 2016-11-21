@@ -78,7 +78,7 @@ Biips code is Copyright (C) Inria, 2010-2014.
 Authors:
 
 - [Adrien Todeschini](http://adrien.tspace.fr/) (main developer)
-- [Francois Caron](http://www.stats.ox.ac.uk/~caron/)
+- [François Caron](http://www.stats.ox.ac.uk/~caron/)
 - Marc Fuentes
 
 Biips code is adapted from:
