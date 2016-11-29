@@ -27,7 +27,7 @@ markdown: kramdown
 # Custom variables
 #########################
 copyright: true
-#ganalytics_id: UA-45407741-5
+ganalytics_id: UA-31640193-1
 tagline: Bayesian inference with interacting particle systems
 lang: en
 #theme: minimal
