@@ -11,7 +11,7 @@ navpos: 5
 [Examples](/examples/)
 --------------
 
-[Rbiips reference manual](/rbiips_doc/)
+[rbiips reference manual](/rbiips/)
 -----------------------
 
 [JAGS user manual](https://sourceforge.net/projects/mcmc-jags/files/Manuals/4.x/jags_user_manual.pdf/download)
