@@ -8,7 +8,7 @@ navpos: 5
 [Papers](/papers/)
 ------------
 
-[Examples](/examples/)
+[Examples](/biips-examples/)
 --------------
 
 [rbiips reference manual](/rbiips/)
