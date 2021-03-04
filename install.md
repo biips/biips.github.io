@@ -10,7 +10,7 @@ Windows
 
 Install Rbiips
 --------------
-* **Requirements**: R (>= 3.0) with Rcpp package
+* **Requirements**: R (>= 3.0) with Rcpp and BH package
 
 * [Download](/download/) Rbiips
 
